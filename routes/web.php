@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Auth\ClientesController;
+use App\Http\Controllers\clientesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,12 +27,18 @@ Route::post('/register', [RegisterController::class, 'register']);
 
 // Rutas de clientes
 //Lista de clientes
-Route::get('/clientes', [RegisterController::class, 'indexClientes']);
+Route::get('/clientes', [clientesController::class, 'indexClientes']);
 //Registro de cliente
-Route::get('/createCliente', [RegisterController::class, 'createClientes']);
+Route::get('/createCliente', [clientesController::class, 'createClientes']);
 //Modificar cliente
+Route::get('clientes/get', [clientesController::class,'getClientes'])->name('clientes.get');
 
 //Borrar cliente
+
+Route::get('/ordenes', [App\Http\Controllers\OrdenesController::class, 'index'])->name('ordenes');
+Route::get('/orden/{id}', [App\Http\Controllers\OrdenesController::class, 'show'])->name('show-orden');
+Route::get('/json/ordenes', [App\Http\Controllers\OrdenesController::class, 'jsonOrdenes'])->name('jsonordenes');
+Route::get('/json/clientes', [App\Http\Controllers\OrdenesController::class, 'jsonClientes'])->name('jsonclientes');
 
 
 
@@ -46,9 +52,5 @@ Route::get('/dashboard', function () {
     return view('dash');
 });
 
-Route::get('/ordenes', function () {
-    return view('ordenes.ordenes');
-});
-Route::get('/clientes', function () {
-    return view('ordenes.ordenes');
-});
+
+
