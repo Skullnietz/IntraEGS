@@ -29,7 +29,7 @@ class OrdenesController extends Controller
                 $Clientes = Clientestienda::get();
                 $Asesores = Asesor::get();
                 $Tecnicos = Tecnico::get();
-                
+
 
 
                 return view('ordenes.ordenes')->with('OrdenUEnt', $OrdenUEnt)->with('Clientes', $Clientes)->with('Asesores', $Asesores)->with('Tecnicos', $Tecnicos);
@@ -56,6 +56,25 @@ class OrdenesController extends Controller
 
     }
 
+    public function getOrdenes(Request $request)
+{
+    $Ordenes = Orden::select('id','descripcion','partidaUno','partidaDos','total','estado','fecha_ingreso','fecha_Salida')->orderBy('id', 'DESC')->get();
+
+    $data = array();
+    if ($request->ajax()) {
+
+        // Obtener los nombres de los asesores correspondientes
+        foreach ($Ordenes as $orden) {
+           // $Asesor = Asesor::where('id','=', $cliente->id_Asesor)->first(['id','nombre']);
+           // $cliente->nombreAsesor = $Asesor ? $Asesor->nombre : null;
+            array_push($data, $orden);
+        }
+
+        return datatables()->of($data)->toJson();
+    }
+    return view('ordenes.getorden'); // Reemplaza 'clientes.index' con la vista donde mostrarás la tabla
+}
+
     public function jsonOrdenes(){
 
 
@@ -65,6 +84,8 @@ class OrdenesController extends Controller
          // EGS es el id 1
             if( Auth::user()->perfil_n == 'Administrador' ){ // EGS Administrador (Tablero)
                 $Ordenes = Orden::orderBy('id', 'DESC')->get(['id','id_tecnico','id_Asesor','id_usuario','fecha_ingreso','fecha_Salida','fecha','estado','total']);
+
+
 
 
                 // Obtener los clientes de las ordenes

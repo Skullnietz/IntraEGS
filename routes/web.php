@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\clientesController;
+use App\Http\Controllers\OrdenesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,7 +32,10 @@ Route::get('/clientes', [clientesController::class, 'indexClientes']);
 //Registro de cliente
 Route::get('/createCliente', [clientesController::class, 'createClientes']);
 //Modificar cliente
+
 Route::get('clientes/get', [clientesController::class,'getClientes'])->name('clientes.get');
+Route::get('ordenes/get', [OrdenesController::class,'getOrdenes'])->name('orden.get');
+
 
 //Borrar cliente
 
